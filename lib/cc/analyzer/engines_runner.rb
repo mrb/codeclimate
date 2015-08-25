@@ -12,6 +12,7 @@ module CC
         @source_dir = source_dir
         @config = config
         @container_label = container_label
+        @beta_engines_enabled = @config.delete(:beta)
       end
 
       def run(container_listener = ContainerListener.new)
@@ -59,7 +60,11 @@ module CC
         {}.tap do |ret|
           @config.engines.each do |name, config|
             if config.enabled? && @registry.key?(name)
-              ret[name] = config
+              if @registry[name][:beta]
+                ret[name] = config if @beta_engines_enabled
+              else
+                ret[name] = config
+              end
             end
           end
         end
