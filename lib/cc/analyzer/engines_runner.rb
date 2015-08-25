@@ -12,7 +12,7 @@ module CC
         @source_dir = source_dir
         @config = config
         @container_label = container_label
-        @beta_engines_enabled = @config.delete(:beta)
+        @beta_engines_enabled = @config.delete(:beta_engines_enabled)
       end
 
       def run(container_listener = ContainerListener.new)
